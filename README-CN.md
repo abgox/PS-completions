@@ -32,10 +32,10 @@
 
 #### 1. 通过 Scoop 安装 (推荐)
 1. `scoop bucket add abgo_bucket https://github.com/abgox/abgo_bucket`
-2. `scoop install scoop-tab`
+2. `scoop install tab-scoop`
     - 在 Scoop bucket 中 以此规律命名
-    - `scoop.ps1`  >>> `scoop-tab`
-    - `scoop-cn.ps1` >>> `scoop-tab-cn`
+    - `scoop.ps1`  >>> `tab-scoop`
+    - `scoop-cn.ps1` >>> `tab-scoop-cn`
     - ...
 3. 重启 PowerShell 就可以使用了
 
