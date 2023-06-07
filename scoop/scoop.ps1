@@ -2,21 +2,20 @@
 # @Author      : abgox
 # @Github      : https://github.com/abgox/PS-completions
 # @description : Scoop tab completion script
-# @version     : v1.0.0
+# @version     : v1.0.1
 #>
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
 Register-ArgumentCompleter -CommandName 'scoop' -ScriptBlock {
     param($wordToComplete, $commandAst)
-    $completions = [System.Collections.Specialized.OrderedDictionary]::new();
-    $scoop_cmd = @("scoop", 'bucket', 'search', 'install', 'uninstall', 'update', 'list', 'info', 'cache', 'reset', 'cleanup', 'prefix', 'cat', 'checkup', 'alias', 'shim', 'config', 'which', 'hold', 'unhold', 'export', 'import', 'depends', 'status', 'create', 'download', 'virustotal', 'home', 'help')
+    $completions = [System.Collections.Specialized.OrderedDictionary]::new()
+    $tab_cmd = @("scoop", 'bucket', 'search', 'install', 'uninstall', 'update', 'list', 'info', 'cache', 'reset', 'cleanup', 'prefix', 'cat', 'checkup', 'alias', 'shim', 'config', 'which', 'hold', 'unhold', 'export', 'import', 'depends', 'status', 'create', 'download', 'virustotal', 'home', 'help')
+    foreach ($_ in $tab_cmd) {
+        $completions[$_] = [System.Collections.Specialized.OrderedDictionary]::new()
+    }
     function addTab($cmd, $subcmd, $Tip) {
         $completions[$cmd] += @{$subcmd = [CompletionResult]::new($subcmd, $subcmd, 'ParameterValue', $Tip) }
     }
-    foreach ($_ in $scoop_cmd) {
-        $completions[$_] = [System.Collections.Specialized.OrderedDictionary]::new()
-    }
-
     addTab 'scoop' 'bucket' "Manage Scoop buckets"
     addTab 'bucket' 'list' "Lists the buckets that have been added"
     addTab 'bucket' 'add' "Add Scoop bucket`neg : scoop bucket add <bucket_name> <bucekt_url>"
@@ -24,7 +23,6 @@ Register-ArgumentCompleter -CommandName 'scoop' -ScriptBlock {
     addTab 'bucket' 'known' "list all known buckets"
 
     addTab 'scoop' 'search' "Search available apps`neg : scoop search <app>"
-
     addTab 'scoop' 'install' "Install apps`neg : scoop install [option] <[bucket/]app>"
     addTab 'install' '-g' "--global`nInstall the app globally"
     addTab 'install' '-i' "--independent`nDon't install dependencies automatically"
@@ -58,7 +56,6 @@ Register-ArgumentCompleter -CommandName 'scoop' -ScriptBlock {
     addTab 'scoop' 'reset' "Reset an app to resolve conflicts`neg : scoop reset python`n     scoop reset python27"
     addTab 'reset' '*' "Reset All apps"
 
-
     addTab 'scoop' 'cleanup' "Cleanup apps by removing old versions`neg : scoop cleanup [option] <app/*>"
     addTab 'cleanup' '-a' "--all`nCleanup all apps (alternative to '*')"
     addTab 'cleanup' '-g' "--global`nCleanup a globally installed app"
@@ -91,7 +88,6 @@ Register-ArgumentCompleter -CommandName 'scoop' -ScriptBlock {
         $completion = @{ $name = [CompletionResult]::new($name, $name, 'ParameterValue', $value) }
         $completions['config'] += $completion
     }
-
     addTab 'scoop' 'which' "Locate a shim/executable (similar to 'which' on Linux)`neg : scoop which sudo"
 
     addTab 'scoop' 'hold' "Hold an app to disable updates`neg : scoop hold [option] <app>"
@@ -129,7 +125,7 @@ Register-ArgumentCompleter -CommandName 'scoop' -ScriptBlock {
     addTab 'scoop' 'home' "Opens the app homepage`neg : scoop home <app>`n     scoop home sudo"
 
     addTab 'scoop' 'help' "Show official help"
-    foreach ($_ in $scoop_cmd) {
+    foreach ($_ in $tab_cmd) {
         if ($_ -ne 'help') {
             addTab $_ '-h' "Show official help"
             if ($_ -ne 'scoop') {
@@ -143,23 +139,17 @@ Register-ArgumentCompleter -CommandName 'scoop' -ScriptBlock {
         $completions['uninstall'] += $completion
     }
 
+    # ---------------------------------
     $commandElements = $commandAst.CommandElements
     $lastCommandElement = $commandElements[$commandElements.Count - 1].Value
-    function tabs($cmd, $Counter) {
-        if ($commandElements.Count -eq $Counter -and $commandElements[$Counter - 2].Value -eq $cmd) {
+    foreach ($cmd in $completions.keys) {
+        if ($commandElements[$commandElements.Count - 2].Value -eq $cmd) {
             $completions[$cmd].keys | Where-Object { $_ -like "$lastCommandElement*" } | ForEach-Object {
-                if (($commandElements.Count -lt ($Counter + 1)) -and ($lastCommandElement -ne $_) ) {
-                    $completions[$cmd][$_]
-                }
+                if ($lastCommandElement -ne $_ ) { $completions[$cmd][$_] }
             }
         }
     }
-    foreach ($_ in $completions.keys) {
-        tabs $_ $commandElements.Count
-    }
     $completions[$lastCommandElement].keys | Where-Object {
         $_ -like "$wordToComplete*"
-    } | ForEach-Object {
-        $completions[$lastCommandElement][$_]
-    }
+    } | ForEach-Object { $completions[$lastCommandElement][$_] }
 }

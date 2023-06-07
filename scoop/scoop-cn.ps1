@@ -2,19 +2,20 @@
 # @Author      : abgox
 # @Github      : https://github.com/abgox/PS-completions
 # @description : Scoop tab completion script
-# @version     : v1.0.0
+# @version     : v1.0.1
 #>
-$scoop_tab_script_block = {
-    param($wordToComplete, $commandAst, $cursorPosition)
-    $completions = [System.Collections.Specialized.OrderedDictionary]::new();
-    $scoop_cmd = @("scoop", 'bucket', 'search', 'install', 'uninstall', 'update', 'list', 'info', 'cache', 'reset', 'cleanup', 'prefix', 'cat', 'checkup', 'alias', 'shim', 'config', 'which', 'hold', 'unhold', 'export', 'import', 'depends', 'status', 'create', 'download', 'virustotal', 'home', 'help')
+using namespace System.Management.Automation
+using namespace System.Management.Automation.Language
+Register-ArgumentCompleter -CommandName 'scoop' -ScriptBlock {
+    param($wordToComplete, $commandAst)
+    $completions = [System.Collections.Specialized.OrderedDictionary]::new()
+    $tab_cmd = @("scoop", 'bucket', 'search', 'install', 'uninstall', 'update', 'list', 'info', 'cache', 'reset', 'cleanup', 'prefix', 'cat', 'checkup', 'alias', 'shim', 'config', 'which', 'hold', 'unhold', 'export', 'import', 'depends', 'status', 'create', 'download', 'virustotal', 'home', 'help')
+    foreach ($_ in $tab_cmd) {
+        $completions[$_] = [System.Collections.Specialized.OrderedDictionary]::new()
+    }
     function addTab($cmd, $subcmd, $Tip) {
         $completions[$cmd] += @{$subcmd = [CompletionResult]::new($subcmd, $subcmd, 'ParameterValue', $Tip) }
     }
-    foreach ($_ in $scoop_cmd) {
-        $completions[$_] = [System.Collections.Specialized.OrderedDictionary]::new()
-    }
-
     addTab 'scoop' 'bucket' "管理 Scoop buckets"
     addTab 'bucket' 'list' "列出已添加的 buckets"
     addTab 'bucket' 'add' "添加 bucket`neg : scoop bucket add <bucket_name> <bucekt_url>"
@@ -88,7 +89,6 @@ $scoop_tab_script_block = {
         $completion = @{ $name = [CompletionResult]::new($name, $name, 'ParameterValue', $value) }
         $completions['config'] += $completion
     }
-
     addTab 'scoop' 'which' "定位shim/可执行文件 (类似于 Linux 的 'which' 命令)`neg : scoop which sudo"
 
     addTab 'scoop' 'hold' "禁用指定软件更新`neg : scoop hold [option] <app>"
@@ -96,7 +96,6 @@ $scoop_tab_script_block = {
 
     addTab 'scoop' 'unhold' "恢复指定软件更新`neg : scoop unhold [option] <app>"
     addTab 'unhold' '-g' "恢复指定全局软件更新`neg : scoop unhold -g sudo"
-
 
     addTab 'scoop' 'export' "以JSON格式导出已安装的应用程序、bucket(以及可选的config)`neg : scoop export -c > ~\Desktop\scoopfile.json`n     导出为Desktop下的 scoopfile.json"
     addTab 'export' '-c' "--config`n导出包括 Scoop 配置文件"
@@ -140,25 +139,17 @@ $scoop_tab_script_block = {
         $completion = @{$_.name = [CompletionResult]::new($_.name, $_.name, 'ParameterValue', $_) }
         $completions['uninstall'] += $completion
     }
-
+    # ---------------------------------
     $commandElements = $commandAst.CommandElements
     $lastCommandElement = $commandElements[$commandElements.Count - 1].Value
-    function tabs($cmd, $Counter) {
-        if ($commandElements.Count -eq $Counter -and $commandElements[$Counter - 2].Value -eq $cmd) {
+    foreach ($cmd in $completions.keys) {
+        if ($commandElements[$commandElements.Count - 2].Value -eq $cmd) {
             $completions[$cmd].keys | Where-Object { $_ -like "$lastCommandElement*" } | ForEach-Object {
-                if (($commandElements.Count -lt ($Counter + 1)) -and ($lastCommandElement -ne $_) ) {
-                    $completions[$cmd][$_]
-                }
+                if ($lastCommandElement -ne $_ ) { $completions[$cmd][$_] }
             }
         }
     }
-    foreach ($_ in $completions.keys) {
-        tabs $_ $commandElements.Count
-    }
     $completions[$lastCommandElement].keys | Where-Object {
         $_ -like "$wordToComplete*"
-    } | ForEach-Object {
-        $completions[$lastCommandElement][$_]
-    }
+    } | ForEach-Object { $completions[$lastCommandElement][$_] }
 }
-Register-ArgumentCompleter -CommandName 'scoop' -ScriptBlock $scoop_tab_script_block
