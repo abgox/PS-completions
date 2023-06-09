@@ -1,8 +1,7 @@
 <#
 # @Author      : abgox
 # @Github      : https://github.com/abgox/PS-completions
-# @description : Scoop tab completion script
-# @version     : v1.0.0
+# @description : volta tab completion script
 #>
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
@@ -55,7 +54,7 @@ Register-ArgumentCompleter -CommandName 'volta' -ScriptBlock {
 
     addTab 'volta' 'completions' "Generate Volta completions`nYou already have completions. You don't need it"
 
-    addTab 'volta' '-v' "--cersion`nPrint the current version of Volta"
+    addTab 'volta' '-v' "--version`nPrint the current version of Volta"
     addTab 'volta' 'help' "Show official help"
     foreach ($_ in $tab_cmd) {
         if ($_ -ne 'help') {

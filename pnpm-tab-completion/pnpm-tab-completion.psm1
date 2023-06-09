@@ -2,7 +2,6 @@
 # @Author      : abgox
 # @Github      : https://github.com/abgox/PS-completions
 # @description : pnpm tab completion script
-# @version     : v1.0.0
 #>
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language

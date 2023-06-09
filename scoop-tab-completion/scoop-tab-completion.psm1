@@ -2,7 +2,6 @@
 # @Author      : abgox
 # @Github      : https://github.com/abgox/PS-completions
 # @description : Scoop tab completion script
-# @version     : v1.0.1
 #>
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
