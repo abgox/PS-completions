@@ -9,54 +9,41 @@
 
 # Some command completion in PowerShell
 
-## Why use it
+## How to use them(eg: `scoop-tab-completion`)
+### How to install
 
-### Take scoop.ps1 for example
+1. Run PowerShell as Administrator.
 
--   Improved command completion
--   Better interaction
--   More convenient help tips
--   Help prompt multi-language selection(If there are scripts in different languages)
-    -   English(scoop.ps1)
-    -   Chinese(scoop-cn.ps1)
-    -   English and Chinese(scoop-cn-en.ps1)
-    -   ...
+2. Execute the following command:
 
-![scoop demo1](./scoop/demo.gif)
-![scoop demo2](./scoop/demo2.gif)
+    ```pwsh
+    Install-Module scoop-tab-completion
+    ```
 
-## How to use it
+3. Restart PowerShell and run:
 
-### Take scoop.ps1 for example
+    ```pwsh
+    Import-Module scoop-tab-completion
+    ```
 
-#### 1. install by Scoop (Recommended)
+    or simply:
 
-1. `scoop bucket add abgo_bucket https://github.com/abgox/abgo_bucket`
-2. `scoop install tab-scoop`
-    - I named it that way in scoop
-    - `scoop.ps1` >>> `tab-scoop`
-    - `scoop-cn.ps1` >>> `tab-scoop-cn`
-    - ...
-3. Restart your PowerShell and enjoy it
+    ```pwsh
+    echo "Import-Module scoop-tab-completion" >> $profile
+    ```
 
-##### Never used Scoop :
+    so you don't have to import the module every time you open PowerShell.
 
--   [What is Scoop](https://github.com/ScoopInstaller/Scoop)
--   [Scoop install](https://github.com/ScoopInstaller/Install)
--   [Scoop Document](https://github.com/ScoopInstaller/Scoop/wiki)
+### How to uninstall
 
-#### 2. install manually
+1. Run PowerShell as Administrator.
+2. Execute the following command:
 
-1. Download `scoop.ps1`
-2. Save to the appropriate location
-    - Because the `scoop.ps1` must always exist unless you don't use this scoop completion anymore
-3. Copy the file path
-4. `notepad $PROFILE`
-5. Add the following to the open file
+    ```pwsh
+    Uninstall-Module scoop-tab-completion
+    ```
 
-```powershell
-# Add this line to enable the completion menu
-Set-PSReadLineKeyHandler -Key 'Tab' -Function MenuComplete
-# Add this line to Use scoop completion
-cat <Put the copied path here> | Out-String | Invoke-Expression
-```
+
+## Demo
+![scoop demo](./demo/scoop-tab-completion-demo.gif)
+![scoop demo2](./demo/scoop-tab-completion-demo2.gif)

@@ -9,55 +9,42 @@
 
 # PowerShell 中的一些命令补全
 
-## 为什么要使用它
+## 如何使用它们(以 `scoop-tab-completion` 为例)
 
-### 以 scoop.ps1 举例
+### 如何去安装
 
--   更完善的命令补全
-    -   基于本地文件进行补全
--   更好的交互
--   更便捷的帮助提示
--   帮助提示多语言选择(如果有不同语言的补全脚本)
-    -   英文(scoop.ps1)
-    -   中文(scoop-cn.ps1)
-    -   中英结合(scoop-cn-en.ps1)
-    -   ...
+1. 以管理员身份运行`PowerShell`
 
-![scoop demo1](./scoop/demo.gif)
-![scoop demo2](./scoop/demo2.gif)
+2. 运行以下代码:
 
-## 如何使用它
+    ```pwsh
+    Install-Module scoop-tab-completion
+    ```
 
-### 还是以 Take scoop.ps1 为例
+3. 重启`Powershell`后运行:
 
-#### 1. 通过 Scoop 安装 (推荐)
-1. `scoop bucket add abgo_bucket https://github.com/abgox/abgo_bucket`
-2. `scoop install tab-scoop`
-    - 在 Scoop bucket 中 以此规律命名
-    - `scoop.ps1`  >>> `tab-scoop`
-    - `scoop-cn.ps1` >>> `tab-scoop-cn`
-    - ...
-3. 重启 PowerShell 就可以使用了
+    ```pwsh
+    Import-Module scoop-tab-completion
+    ```
 
-##### 没有使用过 Scoop :
+    或者添加到配置文件中:
 
--   [什么是 Scoop](https://github.com/ScoopInstaller/Scoop)
--   [安装 Scoop](https://github.com/ScoopInstaller/Install)
--   [Scoop 文档](https://github.com/ScoopInstaller/Scoop/wiki)
+    ```pwsh
+    echo "Import-Module scoop-tab-completion" >> $profile
+    ```
+    这样就不用每次打开 `Powershell` 引入这个模块
 
 
-#### 2. 手动安装
+### 如何卸载
 
-1. 下载 `scoop.ps1`
-2. 保存到电脑本地合适的位置
-    - 因为这个 `scoop.ps1` 必须一直存在除非你不再使用此补全
-3. 复制文件路径
-4. `notepad $PROFILE`
-5. 在打开的文件中添加以下内容
+1. 以管理员身份运行`PowerShell`.
+2. 运行以下代码:
 
-```powershell
-# 添加这一行以启用补全菜单
-Set-PSReadLineKeyHandler -Key 'Tab' -Function MenuComplete
-# 添加这一行以使用 scoop completions
-cat <将复制的路径放到这里> | Out-String | Invoke-Expression
-```
+    ```pwsh
+    Uninstall-Module scoop-tab-completion
+    ```
+
+### 示例
+
+![scoop demo](./demo/scoop-tab-completion-demo.gif)
+![scoop demo2](./demo/scoop-tab-completion-demo2.gif)
