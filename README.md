@@ -45,5 +45,5 @@
 
 
 ## Demo
-![scoop demo](./demo/scoop-tab-completion-demo.gif)
-![scoop demo2](./demo/scoop-tab-completion-demo2.gif)
+![scoop demo](./scoop-tab-completion-demo.gif)
+![scoop demo2](./scoop-tab-completion-demo2.gif)
