@@ -4,14 +4,14 @@
 #>
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
-Register-ArgumentCompleter -CommandName ($(Split-Path -Path $PSScriptRoot -Leaf) -split '-')[0] -ScriptBlock {
+Register-ArgumentCompleter -CommandName ($(Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Leaf) -split '-')[0] -ScriptBlock {
     param($wordToComplete, $commandAst)
 
     # Generate an ordered array
     $completions = [System.Collections.Specialized.OrderedDictionary]::new()
 
     #region : Parse json data
-    $json_file_name = (Split-Path -Path $PSScriptRoot -Leaf) + ".json"
+    $json_file_name = (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Leaf) + ".json"
     $jsonContent = Get-Content -Raw -Path ($PSScriptRoot + "\" + $json_file_name) -Encoding UTF8 | ConvertFrom-Json
     #endregion
 

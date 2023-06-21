@@ -10,7 +10,7 @@
 
     RootModule    = 'volta-tab-completion.psm1'
 
-    ModuleVersion = '1.1.0'
+    ModuleVersion = '1.1.2'
 
     GUID          = 'fc4639d8-7bc8-41da-ae8f-d38fc4b90890'
 
@@ -18,13 +18,13 @@
 
     Copyright     = '(c) abgo. All rights reserved.'
 
-    Description   = 'Volta tab completion.Support DIY(do-it-yourself) by editing JSON. For more information, please visit the project: https://github.com/abgox/PS-completions'
+    Description   = 'Volta tab completion.Support-DIY(do-it-yourself) by editing JSON. For more information, please visit the project: https://github.com/abgox/PS-completions'
 
     PrivateData   = @{
 
         PSData = @{
 
-            Tags       = @('volta', 'tab', 'completion', 'tab-comletion', 'Support DIY(do-it-yourself)')
+            Tags       = @('volta', 'tab', 'completion', 'tab-comletion', 'Support-DIY(do-it-yourself)')
 
             LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
 
