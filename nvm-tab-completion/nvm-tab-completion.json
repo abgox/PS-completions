@@ -1,0 +1,23 @@
+{
+    "nvm arch": "Command: nvm arch [32/64]\nShow if node is running in 32 or 64 bit mode.",
+    "nvm arch 32": "Show if node is running in 32 bit mode.",
+    "nvm arch 64": "Show if node is running in 64 bit mode.",
+    "nvm current": "Display active version",
+    "nvm debug": "Check the NVM4W process for known problems (troubleshooter)",
+    "nvm install": "Command: nvm install <version> [arch] [--insecure]\nInstall node\neg: nvm install lts",
+    "nvm install lts": "Install the lts version of node",
+    "nvm install lts --insecure": "Bypass SSL validation of the remote download server",
+    "nvm install latest": "Install the latest version of node",
+    "nvm install latest --insecure": "Bypass SSL validation of the remote download server",
+    "nvm list": "Command: nvm list [available]\nList the node.js installations",
+    "nvm list available": "View installable versions",
+    "nvm on": "Enable node.js version management.",
+    "nvm off": "Disable node.js version management.",
+    "nvm proxy": "Command: nvm proxy [url]\nSet a proxy to use for downloads. Leave [url] blank to see the current proxy\nSet [url] to \"none\" to remove the proxy.",
+    "nvm uninstall": "Command: nvm uninstall <version>\nThe version must be a specific version",
+    "nvm use": "Command: nvm use [version] [arch]\nSwitch to use the specified version.",
+    "nvm root": "Command: nvm root [path]\nSet the directory where nvm should store different versions of node.js.\nIf <path> is not set, the current root will be displayed.",
+    "nvm version": "Alias : --version/v \nDisplays the current running version of nvm for Windows",
+    "nvm node_mirror": "Command: nvm node_mirror [url]\nSet the node mirror. Defaults to https://nodejs.org/dist/. Leave [url] blank to use default url.",
+    "nvm npm_mirror": "Command: nvm npm_mirror [url]\nSet the npm mirror. Defaults to https://github.com/npm/cli/archive/. Leave [url] blank to default url."
+}
