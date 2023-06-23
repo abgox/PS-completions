@@ -8,25 +8,29 @@
 
 @{
 
-    # Script module or binary module file associated with this manifest.
     RootModule    = 'npm-tab-completion.psm1'
 
-    # Version number of this module.
-    ModuleVersion = '1.0.1'
+    ModuleVersion = '1.2.1'
 
-    # ID used to uniquely identify thxis module
     GUID          = '8db3df6c-39f9-4fb6-bcc6-eee6a15926fe'
 
-    # Author of this module
     Author        = 'abgo'
 
-    # Company or vendor of this module
-    CompanyName   = 'Unknown'
-
-    # Copyright statement for this module
     Copyright     = '(c) abgo. All rights reserved.'
 
-    # Description of the functionality provided by this module
-    Description   = 'npm tab completion'
-}
+    Description   = 'npm tab completion.Support-DIY(do-it-yourself) by editing JSON. For more information, please visit the project: https://github.com/abgox/PS-completions'
 
+    PrivateData   = @{
+
+        PSData = @{
+
+            Tags       = @('npm', 'tab', 'completion', 'tab-comletion', 'Support-DIY(do-it-yourself)')
+
+            LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
+
+            ProjectUri = 'https://github.com/abgox/PS-completions'
+
+        }
+
+    }
+}
