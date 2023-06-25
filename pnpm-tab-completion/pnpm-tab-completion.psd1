@@ -8,25 +8,31 @@
 
 @{
 
-    # Script module or binary module file associated with this manifest.
     RootModule    = 'pnpm-tab-completion.psm1'
 
-    # Version number of this module.
-    ModuleVersion = '1.0.0'
+    ModuleVersion = '1.1.2'
 
-    # ID used to uniquely identify this module
     GUID          = 'c2d26e68-f6b1-4370-b35c-411ff9e614d9'
 
-    # Author of this module
     Author        = 'abgo'
 
-    # Company or vendor of this module
-    CompanyName   = 'Unknown'
-
-    # Copyright statement for this module
     Copyright     = '(c) abgo. All rights reserved.'
 
-    # Description of the functionality provided by this module
-    Description   = 'pnpm tab completion'
-}
+    Description   = 'pnpm tab completion.Support-DIY(do-it-yourself) by editing JSON. For more information, please visit the project: https://github.com/abgox/PS-completions'
 
+    ScriptsToProcess = @("json_download.ps1")
+
+    PrivateData   = @{
+
+        PSData = @{
+
+            Tags       = @('pnpm', 'tab', 'completion', 'tab-comletion', 'Support-DIY(do-it-yourself)')
+
+            LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
+
+            ProjectUri = 'https://github.com/abgox/PS-completions'
+
+        }
+
+    }
+}
