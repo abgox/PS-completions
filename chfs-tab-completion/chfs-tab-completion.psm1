@@ -7,34 +7,28 @@ using namespace System.Management.Automation.Language
 Register-ArgumentCompleter -CommandName ($(Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Leaf) -split '-')[0] -ScriptBlock {
     param($wordToComplete, $commandAst)
 
-    # Generate an ordered array
+    $input_cmds = $commandAst.CommandElements
+    foreach ($_ in $input_cmds) {
+        $input_cmds_str += " " + $_
+    }
+    $input_cmds_str = $input_cmds_str.TrimStart()
+
     $completions = [System.Collections.Specialized.OrderedDictionary]::new()
 
     #region : Parse json data
     $json_file_name = (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Leaf) + ".json"
-    $jsonContent = Get-Content -Raw -Path ($PSScriptRoot + "\" + $json_file_name) -Encoding UTF8 | ConvertFrom-Json
-    #endregion
+    $json_path = "$PSScriptRoot\$json_file_name"
+    $jsonContent = $(Get-Content -Raw -Path $json_path -Encoding UTF8 | ConvertFrom-Json).PSObject.Properties
+    # endregion
 
-    #region : Store all tab-completion
-    foreach ($_ in $jsonContent.PSObject.Properties) {
-        $cmds = $_.Name
-        $help = $_.Value
-        $cmd = $cmds.substring(0, $cmds.lastIndexOf(' '))
-        $subCmd = $cmds.substring($cmds.lastIndexOf(' ') + 1)
-        $completions[$cmds] = [CompletionResult]::new($subcmd, $subcmd, 'ParameterValue', $help)
+    foreach ($_ in $jsonContent.Value.PSObject.Properties.name) {
+        # echo $jsonContent.Value
+        $completions[$_] = [CompletionResult]::new($_, $_, 'ParameterValue', $jsonContent.Value.$_)
     }
-    #endregion
-
-    #region : Carry out
-    $commandElements = $commandAst.CommandElements
-    function completion($num) {
-        # Space($num=0)/input($num=-1) and then tab
-        $completions.Keys | Where-Object { $_ -like "$commandElements*" } | ForEach-Object {
-            $input_space_count = ($commandElements -split ' ').Count - 1
-            $cmd_space_count = ($_ -split ' ').Count - 1
-            if ($input_space_count -eq $cmd_space_count + $num) { $completions[$_] }
-        }
+    if ($wordToComplete) {
+        $completions.Keys | Where-Object { $_ -like "$wordToComplete*" } | ForEach-Object { $completions[$_] }
     }
-    completion $(if ($wordToComplete.length) { 0 }else { -1 })
-    #endregion
+    else {
+        $completions.Keys | Where-Object { $input_cmds_str -notlike "*$_*" } | ForEach-Object { $completions[$_] }
+    }
 }
