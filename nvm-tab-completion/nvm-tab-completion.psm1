@@ -26,32 +26,6 @@ Register-ArgumentCompleter -CommandName ($(Split-Path -Path (Split-Path -Path $P
     }
     #endregion
 
-    #region Special point
-    $known_list = $(scoop bucket known)
-    $bucket_list = $(scoop bucket list).Name
-    foreach ($_ in $known_list) {
-        $completions['scoop bucket add ' + $_] = [CompletionResult]::new($_, $_, 'ParameterValue', "Add Scoop bucket -- $_")
-    }
-    foreach ($_ in $bucket_list) {
-        $completions['scoop bucket rm ' + $_] = [CompletionResult]::new($_, $_, 'ParameterValue', "Remove Scoop bucket -- $_")
-    }
-    $jsonData = Get-Content -Raw -Path "$env:userProfile\.config\scoop\config.json" | ConvertFrom-Json
-    foreach ($_ in $jsonData.PSObject.Properties) {
-        $name = "'" + $_.name + "'"
-        $value = "'" + $_.Value + "'"
-        $completions['scoop config ' + $name] = [CompletionResult]::new($name, $name, 'ParameterValue', "Current value --  " + $value)
-    }
-    @("'use_external_7zip'", "'use_lessmsi'", "'no_junction'", "'scoop_repo'", "'scoop_branch'", "
-	'proxy'", "'autostash_on_conflict'", "'default_architecture'", "'debug'", "
-	'force_update'", "'show_update_log'", "'show_manifest'", "'shim'", "'root_path'", "
-    'global_path'", "'cache_path'", "'gh_token'", "'virustotal_api_key'", "'cat_style'", "'ignore_running_processes'", "
-	'private_hosts'", "'hold_update_until'", "'aria2-enabled'", "'aria2-warning-enabled'", "'aria2-retry-wait'", "'aria2-split'", "'aria2-max-connection-per-server'", "'aria2-min-split-size'", "'aria2-options'") | Where-Object {
-        if (!$completions['scoop config ' + $_]) {
-            $completions['scoop config ' + $_] = [CompletionResult]::new($_, $_, 'ParameterValue', 'It has not been set')
-        }
-    }
-    #endregion
-
     #region : Carry out
     $commandElements = $commandAst.CommandElements
     function completion($num) {

@@ -10,7 +10,7 @@
 
     RootModule    = 'nvm-tab-completion.psm1'
 
-    ModuleVersion = '1.0.0'
+    ModuleVersion = '1.0.1'
 
     GUID          = '8336c830-4e3d-4fa6-a687-6f3d5156fda9'
 
@@ -29,7 +29,6 @@
             LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
 
             ProjectUri = 'https://github.com/abgox/PS-completions'
-
         }
 
     }
