@@ -10,7 +10,7 @@
 
     RootModule    = 'scoop-tab-completion.psm1'
 
-    ModuleVersion = '1.1.2'
+    ModuleVersion = '1.1.3'
 
     GUID          = 'ab913566-0cf9-47d1-a92f-6649820696d6'
 
@@ -18,13 +18,13 @@
 
     Copyright     = '(c) abgo. All rights reserved.'
 
-    Description   = 'scoop tab completion.Support-DIY(do-it-yourself) by editing JSON. For more information, please visit the project: https://github.com/abgox/PS-completions'
+    Description   = 'scoop tab completion.The data of completion comes from json,and you can modify the json file to change the completion as required. For more information, please visit the project: https://github.com/abgox/PS-completions'
 
     PrivateData   = @{
 
         PSData = @{
 
-            Tags       = @('scoop', 'tab', 'completion', 'tab-comletion', 'Support-DIY(do-it-yourself)')
+            Tags       = @('scoop', 'tab', 'completion', 'tab-comletion')
 
             LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
 
