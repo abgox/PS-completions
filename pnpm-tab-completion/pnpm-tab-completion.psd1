@@ -8,25 +8,24 @@
 
 @{
 
-    RootModule    = 'pnpm-tab-completion.psm1'
+    RootModule       = 'pnpm-tab-completion.psm1'
 
-    ModuleVersion = '1.1.2'
+    ModuleVersion    = '1.2.1'
 
-    GUID          = 'c2d26e68-f6b1-4370-b35c-411ff9e614d9'
+    GUID             = 'c2d26e68-f6b1-4370-b35c-411ff9e614d9'
 
-    Author        = 'abgo'
+    Author           = 'abgo'
 
-    Copyright     = '(c) abgo. All rights reserved.'
+    Copyright        = '(c) abgo. All rights reserved.'
 
-    Description   = 'pnpm tab completion.Support-DIY(do-it-yourself) by editing JSON. For more information, please visit the project: https://github.com/abgox/PS-completions'
+    Description      = 'pnpm tab completion.The data of completion comes from json,and you can modify the json file to change the completion as required. For more information, please visit the project: https://github.com/abgox/PS-completions'
 
-    ScriptsToProcess = @("json_download.ps1")
 
-    PrivateData   = @{
+    PrivateData      = @{
 
         PSData = @{
 
-            Tags       = @('pnpm', 'tab', 'completion', 'tab-comletion', 'Support-DIY(do-it-yourself)')
+            Tags       = @('pnpm', 'tab', 'completion', 'tab-comletion', 'Multi-language')
 
             LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
 

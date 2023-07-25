@@ -10,7 +10,7 @@
 
     RootModule    = 'npm-tab-completion.psm1'
 
-    ModuleVersion = '1.2.1'
+    ModuleVersion = '1.3.1'
 
     GUID          = '8db3df6c-39f9-4fb6-bcc6-eee6a15926fe'
 
@@ -18,13 +18,13 @@
 
     Copyright     = '(c) abgo. All rights reserved.'
 
-    Description   = 'npm tab completion.Support-DIY(do-it-yourself) by editing JSON. For more information, please visit the project: https://github.com/abgox/PS-completions'
+    Description   = 'npm tab completion.The data of completion comes from json,and you can modify the json file to change the completion as required. For more information, please visit the project: https://github.com/abgox/PS-completions'
 
     PrivateData   = @{
 
         PSData = @{
 
-            Tags       = @('npm', 'tab', 'completion', 'tab-comletion', 'Support-DIY(do-it-yourself)')
+            Tags       = @('npm', 'tab', 'completion', 'tab-comletion','Multi-language')
 
             LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
 

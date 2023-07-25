@@ -10,7 +10,7 @@
 
     RootModule    = 'nvm-tab-completion.psm1'
 
-    ModuleVersion = '1.0.1'
+    ModuleVersion = '1.1.2'
 
     GUID          = '8336c830-4e3d-4fa6-a687-6f3d5156fda9'
 
@@ -18,13 +18,13 @@
 
     Copyright     = '(c) abgo. All rights reserved.'
 
-    Description   = 'nvm(nvm-window) tab completion.Support-DIY(do-it-yourself) by editing JSON. For more information, please visit the project: https://github.com/abgox/PS-completions'
+    Description   = 'nvm(nvm-window) tab completion.The data of completion comes from json,and you can modify the json file to change the completion as required. For more information, please visit the project: https://github.com/abgox/PS-completions'
 
     PrivateData   = @{
 
         PSData = @{
 
-            Tags       = @('nvm', 'nvm-window','tab', 'completion', 'tab-comletion', 'Support-DIY(do-it-yourself)')
+            Tags       = @('nvm', 'nvm-window','tab', 'completion', 'tab-comletion', 'Multi-language')
 
             LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
 

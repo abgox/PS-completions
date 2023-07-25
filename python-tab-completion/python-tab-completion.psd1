@@ -10,7 +10,7 @@
 
     RootModule    = 'python-tab-completion.psm1'
 
-    ModuleVersion = '1.0.2'
+    ModuleVersion = '1.1.0'
 
     GUID          = '895a755a-8101-44aa-b9f7-eb7ce483e033'
 
@@ -18,13 +18,13 @@
 
     Copyright     = '(c) abgo. All rights reserved.'
 
-    Description   = 'Python tab completion.Support-DIY(do-it-yourself) by editing JSON. For more information, please visit the project: https://github.com/abgox/PS-completions'
+    Description   = 'Python tab completion.The data of completion comes from json,and you can modify the json file to change the completion as required. For more information, please visit the project: https://github.com/abgox/PS-completions'
 
     PrivateData   = @{
 
         PSData = @{
 
-            Tags       = @('python', 'tab', 'completion', 'tab-comletion', 'Support-DIY(do-it-yourself)')
+            Tags       = @('python', 'tab', 'completion', 'tab-comletion', 'Multi-language')
 
             LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
 

@@ -2,27 +2,40 @@
 # @Author      : abgox
 # @Github      : https://github.com/abgox/PS-completions
 #>
+
+using namespace System.Globalization
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
-Register-ArgumentCompleter -CommandName ($(Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Leaf) -split '-')[0] -ScriptBlock {
+Register-ArgumentCompleter -CommandName 'pnpm' -ScriptBlock {
     param($wordToComplete, $commandAst)
 
-    # Generate an ordered array
     $completions = [System.Collections.Specialized.OrderedDictionary]::new()
 
+    # language
+    $language_list = Get-ChildItem -Path "$PSScriptRoot\json" | ForEach-Object { $_.BaseName }
+    # If $tab_completion_language is set, use it.
+    if ($tab_completion_language -in $language_list) {
+        $language = $tab_completion_language
+    }
+    else {
+        $system_language = (Get-WinSystemLocale).name
+        if ($system_language -in $language_list) {
+            $language = $system_language
+        }
+        else {
+            $language = 'en-US'
+        }
+    }
+
     #region : Parse json data
-    $json_file_name = (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Leaf) + ".json"
-    $jsonContent = Get-Content -Raw -Path ($PSScriptRoot + "\" + $json_file_name) -Encoding UTF8 | ConvertFrom-Json
+    $json_file_name = $PSScriptRoot + '\json\' + $language + '.json'
+    $jsonContent = (Get-Content -Raw -Path  $json_file_name -Encoding UTF8 | ConvertFrom-Json).PSObject.Properties
     #endregion
 
     #region : Store all tab-completion
-    foreach ($_ in $jsonContent.PSObject.Properties) {
-        $cmds = $_.Name
-        $help = $_.Value
-        $cmd = $cmds.substring(0, $cmds.lastIndexOf(' '))
-        $subCmd = $cmds.substring($cmds.lastIndexOf(' ') + 1)
-        $completions[$cmds] = [CompletionResult]::new($subcmd, $subcmd, 'ParameterValue', $help)
-
+    foreach ($_ in $jsonContent) {
+        $subCmd = $_.Name.substring($_.Name.lastIndexOf(' ') + 1)
+        $completions['pnpm ' + $_.Name] = [CompletionResult]::new($subcmd, $subcmd, 'ParameterValue', $_.Value)
     }
     #endregion
 

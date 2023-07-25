@@ -10,7 +10,7 @@
 
     RootModule    = 'scoop-tab-completion.psm1'
 
-    ModuleVersion = '1.1.3'
+    ModuleVersion = '1.2.4'
 
     GUID          = 'ab913566-0cf9-47d1-a92f-6649820696d6'
 
@@ -24,7 +24,7 @@
 
         PSData = @{
 
-            Tags       = @('scoop', 'tab', 'completion', 'tab-comletion')
+            Tags       = @('scoop', 'tab', 'completion', 'tab-comletion', 'Multi-language')
 
             LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
 

@@ -2,40 +2,51 @@
 # @Author      : abgox
 # @Github      : https://github.com/abgox/PS-completions
 #>
+
+using namespace System.Globalization
 using namespace System.Management.Automation
 using namespace System.Management.Automation.Language
-Register-ArgumentCompleter -CommandName ($(Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Leaf) -split '-')[0] -ScriptBlock {
+Register-ArgumentCompleter -CommandName 'python' -ScriptBlock {
     param($wordToComplete, $commandAst)
 
-    # Generate an ordered array
     $completions = [System.Collections.Specialized.OrderedDictionary]::new()
 
-    #region : Parse json data
-    $json_file_name = (Split-Path -Path (Split-Path -Path $PSScriptRoot -Parent) -Leaf) + ".json"
-    $jsonContent = Get-Content -Raw -Path ($PSScriptRoot + "\" + $json_file_name) -Encoding UTF8 | ConvertFrom-Json
-    #endregion
-
-    #region : Store all tab-completion
-    foreach ($_ in $jsonContent.PSObject.Properties) {
-        $cmds = $_.Name
-        $help = $_.Value
-        $cmd = $cmds.substring(0, $cmds.lastIndexOf(' '))
-        $subCmd = $cmds.substring($cmds.lastIndexOf(' ') + 1)
-        $completions[$cmds] = [CompletionResult]::new($subcmd, $subcmd, 'ParameterValue', $help)
-
+    # language
+    $language_list = Get-ChildItem -Path "$PSScriptRoot\json" | ForEach-Object { $_.BaseName }
+    # If $tab_completion_language is set, use it.
+    if ($tab_completion_language -in $language_list) {
+        $language = $tab_completion_language
     }
-    #endregion
+    else {
+        $system_language = (Get-WinSystemLocale).name
+        if ($system_language -in $language_list) {
+            $language = $system_language
+        }
+        else {
+            $language = 'en-US'
+        }
+    }
+
+    #region : Parse json data
+    $json_file_name = $PSScriptRoot + "\json\" + $language + ".json"
+    $jsonContent = (Get-Content -Raw -Path $json_file_name -Encoding UTF8 | ConvertFrom-Json).PSObject.Properties
+    # endregion
 
     #region : Carry out
     $commandElements = $commandAst.CommandElements
-    function completion($num) {
-        # Space($num=0)/input($num=-1) and then tab
-        $completions.Keys | Where-Object { $_ -like "$commandElements*" } | ForEach-Object {
-            $input_space_count = ($commandElements -split ' ').Count - 1
-            $cmd_space_count = ($_ -split ' ').Count - 1
-            if ($input_space_count -eq $cmd_space_count + $num) { $completions[$_] }
-        }
+    foreach ($_ in $commandElements) {
+        $commandElements_str += " " + $_
     }
-    completion $(if ($wordToComplete.length) { 0 }else { -1 })
+    $commandElements_str = $commandElements_str.TrimStart()
+
+    foreach ($_ in $jsonContent.Value.PSObject.Properties.name) {
+        $completions[$_] = [CompletionResult]::new($_, $_, 'ParameterValue', $jsonContent.Value.$_)
+    }
+    if ($wordToComplete) {
+        $completions.Keys | Where-Object { $_ -like "$wordToComplete*" } | ForEach-Object { $completions[$_] }
+    }
+    else {
+        $completions.Keys | Where-Object { $commandElements_str -notlike "*$_*" } | ForEach-Object { $completions[$_] }
+    }
     #endregion
 }

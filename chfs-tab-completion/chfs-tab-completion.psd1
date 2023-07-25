@@ -2,7 +2,7 @@
 
     RootModule    = 'chfs-tab-completion.psm1'
 
-    ModuleVersion = '1.2.3'
+    ModuleVersion = '1.3.1'
 
     GUID          = '9b970e32-477e-4e78-9d0b-bf2802d3f4ba'
 
@@ -16,7 +16,7 @@
 
         PSData = @{
 
-            Tags       = @('chfs', 'CuteHttpFileServer', 'tab', 'completion', 'tab-comletion')
+            Tags       = @('chfs', 'CuteHttpFileServer', 'tab', 'completion', 'tab-comletion','Multi-language')
 
             LicenseUri = 'https://github.com/abgox/PS-completions/blob/main/LICENSE'
 
