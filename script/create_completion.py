@@ -15,13 +15,23 @@ current_date_str = datetime.now().strftime('%Y-%m-%d')
 
 JSON_ZH_CN_DEMO = '''
 {
-    "demo sub": "这是命令补全的一个demo"
+    "demo1": "这是命令补全的第一个demo",
+    "demo1 sub1": "这是子命令补全的第一个demo",
+    "demo1 sub2": "这是子命令补全的第二个demo",
+    "demo2": "这是命令补全的第二个demo",
+    "demo2 sub1": "这是子命令补全的第一个demo",
+    "demo2 sub2": "这是子命令补全的第二个demo"
 }
 '''
 
 JSON_EN_US_DEMO = '''
 {
-    "demo sub": "This is a demo command for tab completion."
+    "demo1": "This is first demo command for tab completion.",
+    "demo1 sub1": "This is first demo subCommand for tab completion.",
+    "demo1 sub2": "This is second demo subCommand for tab completion.",
+    "demo2": "This is second demo command for tab completion.",
+    "demo2 sub1": "This is first demo subCommand for tab completion.",
+    "demo2 sub2": "This is second demo subCommand for tab completion."
 }
 '''
 
@@ -77,10 +87,10 @@ def main():
     project_name = f'{ command_name }-tab-completion'
     # 生成项目guid
     guid = str(uuid.uuid4())
-    
-    tags = [command_name, 'tab', 'completion', 'tab-comletion']
+
+    tags = [command_name, 'tab', 'completion', 'tab-completion']
     tags_str = ', '.join(f"'{tag}'" for tag in tags)
-        
+
     template_data = {
       "project_uri": PROJECT_URI,
       "license_uri": LICENSE_URI,
@@ -90,25 +100,27 @@ def main():
       "description": description,
       "tags_str": tags_str,
       "guid": guid,
-      "current_date_str": current_date_str
+      "current_date_str": current_date_str,
+      "command_name": command_name
+
     }
-    
+
     console.print(template_data, style='blue')
-    
+
     template_env = Environment(loader=FileSystemLoader('templates'))
     psd_file_template = template_env.get_template('tab-completion.psd1')
     psm_file_template = template_env.get_template('tab-completion.psm1')
-    
+
     psd_content = psd_file_template.render(template_data)
     psm_content = psm_file_template.render(template_data)
-    
+
     project_path = f'../{project_name}'
     psd_file_path = f'{project_path}/{project_name}.psd1'
     write_file(psd_file_path, psd_content)
-    
+
     psm_file_path = f'{project_path}/{project_name}.psm1'
     write_file(psm_file_path, psm_content)
-    
+
     write_file(f'{project_path}/json/en-US.json', JSON_EN_US_DEMO)
     write_file(f'{project_path}/json/zh-CN.json', JSON_ZH_CN_DEMO)
 
