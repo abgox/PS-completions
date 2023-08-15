@@ -1,3 +1,5 @@
+# 👉[PSCompletions —— A better way to manage completions](https://github.com/abgox/PSCompletions 'PSCompletions')👈
+
 [![license](https://img.shields.io/github/license/abgox/PS-completions)](https://github.com/abgox/PS-completions/blob/main/LICENSE)
 [![code size](https://img.shields.io/github/languages/code-size/abgox/PS-completions.svg)](https://img.shields.io/github/languages/code-size/abgox/PS-completions.svg)
 [![repo size](https://img.shields.io/github/repo-size/abgox/PS-completions.svg)](https://img.shields.io/github/repo-size/abgox/PS-completions.svg)
